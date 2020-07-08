@@ -1,4 +1,4 @@
-import { INCREASE_BREAK, DECREASE_BREAK, INCREASE_SESSION, DECREASE_SESSION, RESET_SESSION, RESET_BREAK, REDUCE_SESSION } from "./actionTypes";
+import { INCREASE_BREAK, DECREASE_BREAK, START_SESSION,INCREASE_SESSION, DECREASE_SESSION, RESET_SESSION, RESET_BREAK, REDUCE_SESSION } from "./actionTypes";
 
 export const increaseBreak = () => ({
   type: INCREASE_BREAK
@@ -26,4 +26,8 @@ export const resetSession = () => ({
 
 export const reduceSession = () => ({
     type: REDUCE_SESSION
+  });
+
+  export const startSession = () => ({
+    type: START_SESSION
   });

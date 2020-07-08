@@ -6,10 +6,6 @@ import { increaseBreak, decreaseBreak } from './redux/actions'
 
 
 class BreakLength extends React.Component{
-  constructor(props){
-    super(props);
-
-  }
 
   render(){
     return (
@@ -24,7 +20,7 @@ class BreakLength extends React.Component{
 }
 
 const mapStateToProps = state =>({
-  breakTime: state.breakTime.break,
+  breakTime: state.breakTime.break
 });
 
 const mapDispatchToProps = {

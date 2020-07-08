@@ -6,10 +6,6 @@ import { increaseSession, decreaseSession } from './redux/actions'
 
 
 class SessionLength extends React.Component{
-  constructor(props){
-    super(props);
-
-  }
 
   render(){
     return (
@@ -24,7 +20,7 @@ class SessionLength extends React.Component{
 }
 
 const mapStateToProps = state =>({
-  sessionTime: state.sessionTime.session,
+  sessionTime: state.sessionTime.session
 });
 
 const mapDispatchToProps = {
