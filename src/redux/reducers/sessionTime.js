@@ -1,4 +1,4 @@
-import { INCREASE_SESSION, DECREASE_SESSION, START_SESSION, RESET_SESSION, REDUCE_SESSION } from "../actionTypes";
+import { INCREASE_SESSION, DECREASE_SESSION, START_SESSION, RESET_SESSION, REDUCE_SESSION, STARTOVER_SESSION } from "../actionTypes";
 
 var remainingTime = new Date();
 remainingTime.setMinutes(25);
@@ -148,6 +148,20 @@ const sessionTime = (state = initialState, action) =>{
         formatted: state.formatted,
         reset: false,
         sessionStarted:!state.sessionStarted
+      }
+    }
+
+
+    case STARTOVER_SESSION:{
+      var so_remaining=new Date();
+      so_remaining.setMinutes(state.session);
+      so_remaining.setSeconds(0);
+      return{
+        session: state.session,
+        sessionRemaining: so_remaining,
+        formatted: so_remaining.getMinutes()+":00",
+        reset:false,
+        sessionStarted: false
       }
     }
 
