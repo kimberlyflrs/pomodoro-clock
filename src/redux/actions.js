@@ -47,7 +47,3 @@ export const reduceSession = () => ({
   export const startoverBreak = () => ({
     type: STARTOVER_BREAK
   });
-
-  export const pauseSession = () => ({
-    type: PAUSE_SESSION
-  });
