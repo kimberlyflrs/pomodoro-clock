@@ -6,8 +6,7 @@ import { resetBreak, resetSession, reduceSession, startSession, startoverSession
 //when the time reaches zero, play the beep sound, then count down break
 //we need to format the time left
 
-//turn this into a class where we have the break, session, start t/f, reset, stop which
-//pauses the time, was it stopped t/f
+//i should only be able to change the session if it's paused
 
 /*
 THINGS TO DO
@@ -21,15 +20,15 @@ class Clock extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      break: this.props.breakTime,
-      start: false,
-      stop:false,
-      resetClicked: false,
-      previousOver: false
+      sessionpaused: false,
+      breakpaused: true,
+      resetclicked:false
     }
     this.reset = this.reset.bind(this);
     this.startClock = this.startClock.bind(this);
     this.startBreak = this.startBreak.bind(this);
+    this.playAudio = this.playAudio.bind(this);
+    this.stopAudio = this.stopAudio.bind(this);
   }
 
   startClock(){
@@ -38,18 +37,24 @@ class Clock extends React.Component{
        2. if you click stop
        3. if reset is clicked
     */
-   console.log('starting the session')
-   document.getElementById('timer-label').innerHTML = "Session";
-  this.props.startSession();
-  const timer = setInterval(() => {
-      if (!this.props.sessionStart){//if stop was clicked or reset
+
+   this.setState({
+     resetclicked:false,
+     sessionpaused: !this.state.sessionpaused
+   })
+   this.props.startSession();
+   const timer = setInterval(() => {
+      if (!this.state.sessionpaused || this.state.resetclicked){//if stop was clicked or reset
           clearInterval(timer);
           document.getElementById('start_stop').innerHTML = "start";
       }
       else if(this.props.sessionRemaining.getMinutes()===0 && this.props.sessionRemaining.getSeconds()===0){//if it gets to zero
         clearInterval(timer);
         this.props.startoverSession(); //reset session variable
-        //make the sound
+        this.setState({
+          sessionpaused:false
+        })
+        this.playAudio()
         this.startBreak();
       }
       else{
@@ -67,16 +72,26 @@ class Clock extends React.Component{
     2.stop button is clicked
     3.reset is clicked
      */
+    this.setState({
+      breakpaused:!this.state.breakpaused,
+      resetclicked:false
+    })
+    console.log('starting the break')
     this.props.startBreak();
     const timer = setInterval(() => {
-      if (!this.props.breakStart){//start and stop is clicked
+      if (this.state.breakpaused || this.state.resetclicked){//start and stop is clicked
           clearInterval(timer);
           document.getElementById('start_stop').innerHTML = "start";
       }
       else if(this.props.breakRemaining.getMinutes()===0 && this.props.breakRemaining.getSeconds()===0){//gets to zero
         clearInterval(timer);
         this.props.startoverBreak(); //reset break variable
+        this.setState({
+          breakpaused: true
+        })
         //make the sound
+        this.playAudio();
+        console.log('something happens here maybe the error')
         this.startClock();
       }
       else{//keep erasing
@@ -84,14 +99,35 @@ class Clock extends React.Component{
         document.getElementById('start_stop').innerHTML = "stop";
       }
     }, 1000);
-    console.log('break will start now');
   }
+
+
+
+playAudio(){
+  //plays beeping sound once time is over
+  var audio = document.getElementById('beep');
+  audio.play()
+}
+
+
+stopAudio(){
+  var audio = document.getElementById('beep');
+  audio.pause()
+  audio.load()
+}
+
 
 
 
   reset(){
     //resets the break and session
+    this.stopAudio()
     console.log('resetting');
+    this.setState({
+      resetclicked:true,
+      sessionpaused:false,
+      breakpaused:true
+    })
     this.props.resetBreak();
     this.props.resetSession();
   }
@@ -108,6 +144,14 @@ class Clock extends React.Component{
         <h3 id="time-left">{this.props.formatBreak}</h3>
         <button id="start_stop" onClick={this.startBreak}>start</button>
         <button id="reset" onClick={this.reset}>reset</button>
+        <audio
+          id="beep"
+          preload="auto"
+          src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+          ref={(audio) => {
+            this.audioBeep = audio;
+          }}
+        />
         </div>
       )
     }
@@ -118,6 +162,14 @@ class Clock extends React.Component{
         <h3 id="time-left">{this.props.formatSession}</h3>
         <button id="start_stop" onClick={this.startClock}>start</button>
         <button id="reset" onClick={this.reset}>reset</button>
+        <audio
+          id="beep"
+          preload="auto"
+          src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+          ref={(audio) => {
+            this.audioBeep = audio;
+          }}
+        />
         </div>
       )
     }

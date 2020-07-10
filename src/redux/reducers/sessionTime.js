@@ -147,7 +147,7 @@ const sessionTime = (state = initialState, action) =>{
         sessionRemaining: state.sessionRemaining,
         formatted: state.formatted,
         reset: false,
-        sessionStarted:!state.sessionStarted
+        sessionStarted:true
       }
     }
 

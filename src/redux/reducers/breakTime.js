@@ -149,7 +149,7 @@ const breakTime = (state = initialState, action) =>{
         breakRemaining: state.breakRemaining,
         formatted: state.formatted,
         reset: false,
-        breakStarted:!state.breakStarted
+        breakStarted:true
       }
     }
 
