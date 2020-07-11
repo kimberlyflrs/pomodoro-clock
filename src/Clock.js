@@ -2,19 +2,8 @@ import React from 'react';
 import './App.css';
 import {connect} from 'react-redux';
 import { resetBreak, resetSession, reduceSession, startSession, startoverSession,reduceBreak, startBreak, startoverBreak } from './redux/actions';
-
-//when the time reaches zero, play the beep sound, then count down break
-//we need to format the time left
-
-//i should only be able to change the session if it's paused
-
-/*
-THINGS TO DO
--add the break logic which is similar to the session logic
--loop the clock
---when session is over, start the break, and so on
----change the label session to break and so on
-*/
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Button} from 'react-bootstrap';
 
 class Clock extends React.Component{
   constructor(props){
@@ -76,7 +65,6 @@ class Clock extends React.Component{
       breakpaused:!this.state.breakpaused,
       resetclicked:false
     })
-    console.log('starting the break')
     this.props.startBreak();
     const timer = setInterval(() => {
       if (this.state.breakpaused || this.state.resetclicked){//start and stop is clicked
@@ -89,9 +77,7 @@ class Clock extends React.Component{
         this.setState({
           breakpaused: true
         })
-        //make the sound
         this.playAudio();
-        console.log('something happens here maybe the error')
         this.startClock();
       }
       else{//keep erasing
@@ -122,7 +108,6 @@ stopAudio(){
   reset(){
     //resets the break and session
     this.stopAudio()
-    console.log('resetting');
     this.setState({
       resetclicked:true,
       sessionpaused:false,
@@ -133,17 +118,17 @@ stopAudio(){
   }
 
   render(){
-    //i can do conditional rendering
-    /*if session is on then render this button,
-    if not do break rendering,
-    if neither then session */
     if(this.props.breakStart){
       return(
-        <div className="App">
+        <div>
         <h2 id="timer-label">Break</h2>
-        <h3 id="time-left">{this.props.formatBreak}</h3>
-        <button id="start_stop" onClick={this.startBreak}>start</button>
-        <button id="reset" onClick={this.reset}>reset</button>
+        <div className="row breakinfo">
+          <div className="circle">
+            <h3 id="time-left">{this.props.formatBreak}</h3>
+          </div>
+        </div>
+        <Button id="start_stop" onClick={this.startBreak} className="spacing">start</Button>
+        <Button id="reset" onClick={this.reset} className="spacing">reset</Button>
         <audio
           id="beep"
           preload="auto"
@@ -157,11 +142,15 @@ stopAudio(){
     }
     else{
       return(
-        <div className="App">
+        <div>
         <h2 id="timer-label">Session</h2>
-        <h3 id="time-left">{this.props.formatSession}</h3>
-        <button id="start_stop" onClick={this.startClock}>start</button>
-        <button id="reset" onClick={this.reset}>reset</button>
+        <div className="row breakinfo">
+          <div className="circle">
+          <h3 id="time-left">{this.props.formatSession}</h3>
+          </div>
+        </div>
+        <Button id="start_stop" onClick={this.startClock} className="spacing">start</Button>
+        <Button id="reset" onClick={this.reset} className="spacing">reset</Button>
         <audio
           id="beep"
           preload="auto"

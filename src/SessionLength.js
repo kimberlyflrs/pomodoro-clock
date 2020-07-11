@@ -2,25 +2,47 @@ import React from 'react';
 import './App.css';
 import {connect} from 'react-redux';
 import { increaseSession, decreaseSession } from './redux/actions'
-
+import {Button} from 'react-bootstrap';
 
 
 class SessionLength extends React.Component{
+  constructor(props){
+    super(props);
+    this.increaseSession = this.increaseSession.bind(this);
+    this.decreaseSession = this.decreaseSession.bind(this);
+  }
+
+  increaseSession(){
+    if(!this.props.sessionStarted && !this.props.breakStarted){
+      this.props.increaseSession()
+    }
+  }
+
+  decreaseSession(){
+    if(!this.props.sessionStarted && !this.props.breakStarted){
+      this.props.decreaseSession()
+    }
+  }
+
 
   render(){
     return (
-      <div className="App">
+      <div>
         <h2 id="session-label">Session Length</h2>
-        <button id="session-increment" onClick={()=>this.props.increaseSession()}>increase</button>
+        <div className="row breakinfo">
+        <Button id="session-increment" onClick={this.increaseSession} className="spacing">+</Button>
         <h3 id="session-length">{this.props.sessionTime}</h3>
-        <button id="session-decrement" onClick={()=>this.props.decreaseSession()}>decrease</button>
+        <Button id="session-decrement" onClick={this.decreaseSession} className="spacing">-</Button>
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state =>({
-  sessionTime: state.sessionTime.session
+  sessionTime: state.sessionTime.session,
+  sessionStarted: state.sessionTime.sessionStarted,
+  breakStarted: state.breakTime.breakStarted
 });
 
 const mapDispatchToProps = {
