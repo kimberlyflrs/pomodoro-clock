@@ -35,7 +35,7 @@ class Clock extends React.Component{
    const timer = setInterval(() => {
       if (!this.state.sessionpaused || this.state.resetclicked){//if stop was clicked or reset
           clearInterval(timer);
-          document.getElementById('start_stop').innerHTML = "start";
+          document.getElementById('start_stop').innerHTML = "Start";
       }
       else if(this.props.sessionRemaining.getMinutes()===0 && this.props.sessionRemaining.getSeconds()===0){//if it gets to zero
         clearInterval(timer);
@@ -48,7 +48,7 @@ class Clock extends React.Component{
       }
       else{
         this.props.reduceSession();
-        document.getElementById('start_stop').innerHTML = "stop";
+        document.getElementById('start_stop').innerHTML = "Stop";
       }
     }, 1000);
   }
@@ -69,7 +69,7 @@ class Clock extends React.Component{
     const timer = setInterval(() => {
       if (this.state.breakpaused || this.state.resetclicked){//start and stop is clicked
           clearInterval(timer);
-          document.getElementById('start_stop').innerHTML = "start";
+          document.getElementById('start_stop').innerHTML = "Start";
       }
       else if(this.props.breakRemaining.getMinutes()===0 && this.props.breakRemaining.getSeconds()===0){//gets to zero
         clearInterval(timer);
@@ -82,7 +82,7 @@ class Clock extends React.Component{
       }
       else{//keep erasing
         this.props.reduceBreak();
-        document.getElementById('start_stop').innerHTML = "stop";
+        document.getElementById('start_stop').innerHTML = "Stop";
       }
     }, 1000);
   }
@@ -123,12 +123,20 @@ stopAudio(){
         <div>
         <h2 id="timer-label">Break</h2>
         <div className="row breakinfo">
+        <div className="tomato">
+            <div className="stem"></div>
+            <div className="leavess">
+              <div className="leaves"></div>
+              <div className="leaves3"></div>
+              <div className="leaves2"></div>
+            </div>
           <div className="circle">
             <h3 id="time-left">{this.props.formatBreak}</h3>
           </div>
+          </div>
         </div>
-        <Button id="start_stop" onClick={this.startBreak} className="spacing">start</Button>
-        <Button id="reset" onClick={this.reset} className="spacing">reset</Button>
+        <Button id="start_stop" onClick={this.startBreak} className="spacing">Start</Button>
+        <Button id="reset" onClick={this.reset} className="spacing">Reset</Button>
         <audio
           id="beep"
           preload="auto"
@@ -145,12 +153,20 @@ stopAudio(){
         <div>
         <h2 id="timer-label">Session</h2>
         <div className="row breakinfo">
+        <div className="tomato">
+            <div className="stem"></div>
+            <div className="leavess">
+              <div className="leaves"></div>
+              <div className="leaves3"></div>
+              <div className="leaves2"></div>
+            </div>
           <div className="circle">
-          <h3 id="time-left">{this.props.formatSession}</h3>
+            <h3 id="time-left">{this.props.formatSession}</h3>
+          </div>
           </div>
         </div>
-        <Button id="start_stop" onClick={this.startClock} className="spacing">start</Button>
-        <Button id="reset" onClick={this.reset} className="spacing">reset</Button>
+        <Button id="start_stop" onClick={this.startClock} className="spacing">Start</Button>
+        <Button id="reset" onClick={this.reset} className="spacing">Reset</Button>
         <audio
           id="beep"
           preload="auto"

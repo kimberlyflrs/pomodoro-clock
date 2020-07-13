@@ -24,6 +24,11 @@ function App() {
             <Clock/>
           </div>
         </div>
+        <div className="row">
+          <div className="col-12">
+            <h6>Created and Designed by Kimberly Flores</h6>
+          </div>
+        </div>
     </div>
   );
 }
