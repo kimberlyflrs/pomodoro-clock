@@ -3,7 +3,6 @@ import './App.css';
 import BreakLength from './BreakLength';
 import SessionLength from './SessionLength';
 import Clock from './Clock';
-import ReactFCCtest from 'react-fcctest';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
