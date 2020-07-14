@@ -1,11 +1,11 @@
 {
   "name": "pomodoro-clock",
   "version": "0.1.0",
-  "engines":{
+  "private": true,
+  "engines": {
     "node": "12.16.1",
     "npm": "6.13.4"
   },
-  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
